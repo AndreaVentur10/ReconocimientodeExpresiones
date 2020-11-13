@@ -12,6 +12,10 @@ classi.py - contains code for obtaining the number of hits and fails of each exp
 testing.py - contains code for testing the models of each database with the testing images of a choosen database
               
               python testing.py --db [fer2013/jaffe/ck] --m [fer2013/jaffe/ck]
+              
+models.py - contains code to train the CNN models of a choosen database
+
+              python models.py --db [fer2013/jaffe/ck]
 
 haarcascade_frontalface_default.xml -  tool used for detecting faces in images
 
