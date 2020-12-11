@@ -11,15 +11,29 @@ classi.py - contains code for obtaining the number of hits and fails of each exp
 
 testing.py - contains code for testing the models of each database with the testing images of a choosen database
               
-              python testing.py --db [fer2013/jaffe/ck] --m [fer2013/jaffe/ck]
+              python testing.py --db [ck/fer2013/jaffe/hibrido1/hibrido2/hibrido3/hibrido4] --m [ck/fer2013/jaffe/hibrido1/hibrido2/hibrido3/hibrido4]
               
 models.py - contains code to train the CNN models of a choosen database
 
-              python models.py --db [fer2013/jaffe/ck]
+              python models.py --db [fer2013/jaffe/ck/kdef]
+              
+hibrids.py - contains code to create the hibrid models       
+
+               python hibrids.py --h [1/2/3/4]
+                             
+create_final.py - contains code to create the final database of the max values  
+
+display.py - contains code to execute the expressions detector
+
 
 haarcascade_frontalface_default.xml -  tool used for detecting faces in images
 
 
+## For the execution:
+
+Execute display.py for playing the tool with the final model trained.
+
+                python display.py
 
 ## Database links:
 
