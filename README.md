@@ -42,3 +42,97 @@ Execute display.py for playing the tool with the final model trained.
 -JAFFE Database: https://zenodo.org/record/3451524#.X3o8-GgzZPY (Request access needed)
 
 -Fer2013 Database: https://www.kaggle.com/astraszab/facial-expression-dataset-image-folders-fer2013
+
+## Distribution of the directories:
+
+.
+
++--ck
+
+| +--train
+
+|    +--anger
+
+|    +--disgust
+
+|    +--fear
+
+|    +--happy
+
+|    +--neutral
+
+|    +--sad
+
+|    +--surprise
+
+| +--test
+
+|    +--anger
+
+|    +--disgust
+
+|    +--fear
+
+|    +--happy
+
+|    +--neutral
+
+|    +--sad
+
+|    +--surprise
+
++--fer2013
+
++--final
+
++--hibrido1
+
++--hibrido2
+
++--hibrido3
+
++--hibrido4
+
++--jaffe
+
++--kdef
+
++--models
+
+| +--fer2013-pre.h5
+
+| +--modelck.h5
+
+| +--modelfinal2.h5
+
+| +--modelhibrid1.h5
+
+| +--modelhibrid2.h5
+
+| +--modelhibrid3.h5
+
+| +--modelhibrid4.h5
+
+| +--modeljaffe.h5
+
+| +--modelkdef.h5
+
++--ck.py
+
++--classi.py
+
++--create_final.py
+
++--display.py
+
++--haarcascade_frontalface_default.xml
+
++--hibrids.py
+
++--jaffe.py
+
++--models.py
+
++--README.md
+
++--testing.py
