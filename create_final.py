@@ -1,5 +1,6 @@
-""" En este fichero python se encuentra el código fuente dedicado a los testings de cada Base de Datos(ck,jaffe,fer2013)
-con cada modelo hecho a partir de dichas Bases de datos: model.h5(fer2013), modeljaffe.h5(jaffe) y modelck.h5(ck)"""
+""" En este fichero python se encuentra el código fuente dedicado a los testings de cada Base de Datos(ck,jaffe,
+fer2013) con cada modelo hecho a partir de dichas Bases de datos: model.h5(fer2013), modelkdef.h5(kdef),
+modeljaffe.h5(jaffe) y modelck.h5(ck) """
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
@@ -140,7 +141,7 @@ def maxvalues():
     return results, indexs
 
 emotions = ["anger", "disgust", "fear", "happy", "neutral", "sad", "surprise"]
-models = ['modelhibrid1.h5', 'modelhibrid2.h5', 'modelhibrid3.h5','modelhibrid4.h5']
+models = ['models/modelhibrid1.h5', 'models/modelhibrid2.h5', 'models/modelhibrid3.h5','models/modelhibrid4.h5']
 hibrids = ["hibrido1", "hibrido2", "hibrido3", "hibrido4"]
 results, indexs = maxvalues()
 # indexs = [1, 3, 3, 1, 2, 0, 1]

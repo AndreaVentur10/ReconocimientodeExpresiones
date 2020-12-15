@@ -10,7 +10,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # ----------------------------- INICIO: parser de argumentos --db database-----------------------------
 ap = argparse.ArgumentParser()
-ap.add_argument("--db",help="ck/fer2013/fer2013-pre/jaffe/hibrido")
+ap.add_argument("--db",help="ck/fer2013/kdef/jaffe/hibrido")
 db = ap.parse_args().db
 
 if db == 'fer2013':
@@ -20,7 +20,7 @@ if db == 'fer2013':
     num_val = 570
     batch_size = 64
     num_epoch = 50
-    name_m = 'fer2013-pre.h5'
+    name_m = 'models/fer2013-pre.h5'
 
 elif db == 'jaffe':
     train_dir = 'jaffe/train'
@@ -29,7 +29,7 @@ elif db == 'jaffe':
     num_val = 43
     batch_size = 64
     num_epoch = 50
-    name_m = 'modeljaffe.h5'
+    name_m = 'models/modeljaffe.h5'
 
 elif db == 'ck':
     train_dir = 'ck/train'
@@ -38,7 +38,7 @@ elif db == 'ck':
     num_val = 183
     batch_size = 64
     num_epoch = 50
-    name_m = 'modelck.h5'
+    name_m = 'models/modelck.h5'
 
 elif db == 'kdef':
     train_dir = 'kdef/train'
@@ -47,7 +47,7 @@ elif db == 'kdef':
     num_val = 196
     batch_size = 64
     num_epoch = 50
-    name_m = 'modelkdef.h5'
+    name_m = 'models/modelkdef.h5'
 
 elif db == 'hibrido1':
     train_dir = 'hibrido1/train'
@@ -56,7 +56,7 @@ elif db == 'hibrido1':
     num_val = 379
     batch_size = 64
     num_epoch = 50
-    name_m = 'modelhibrid1.h5'
+    name_m = 'models/modelhibrid1.h5'
 
 elif db == 'hibrido2':
     train_dir = 'hibrido2/train'
@@ -65,7 +65,7 @@ elif db == 'hibrido2':
     num_val = 753
     batch_size = 64
     num_epoch = 50
-    name_m = 'modelhibrid2.h5'
+    name_m = 'models/modelhibrid2.h5'
 
 elif db == 'hibrido3':
     train_dir = 'hibrido3/train'
@@ -74,7 +74,7 @@ elif db == 'hibrido3':
     num_val = 766
     batch_size = 64
     num_epoch = 50
-    name_m = 'modelhibrid3.h5'
+    name_m = 'models/modelhibrid3.h5'
 
 elif db == 'hibrido4':
     train_dir = 'hibrido4/train'
@@ -83,7 +83,7 @@ elif db == 'hibrido4':
     num_val = 949
     batch_size = 64
     num_epoch = 50
-    name_m = 'modelhibrid4.h5'
+    name_m = 'models/modelhibrid4.h5'
 
 elif db == 'final':
     train_dir = 'final/train'
@@ -92,7 +92,7 @@ elif db == 'final':
     num_val = 717 # 811
     batch_size = 64
     num_epoch = 50
-    name_m = 'modelfinal2.h5'
+    name_m = 'models/modelfinal2.h5'
 
 """   # Fer2013 sin preprocesar
     if db == 'fer2013':
@@ -102,7 +102,7 @@ elif db == 'final':
         num_val = 7178
         batch_size = 64
         num_epoch = 50
-        name_m = 'fer2013.h5'
+        name_m = 'models/fer2013.h5'
 """
 # ----------------------------- FIN: de parser de argumentos --db database-----------------------------
 

@@ -28,7 +28,7 @@ model.add(Dropout(0.5))
 model.add(Dense(6, activation='softmax'))
 
 # Cargamos el modelo final
-model.load_weights('modelfinal2.h5')  # modelo
+model.load_weights('models/modelfinal2.h5')  # modelo
 
 # ---------------------------------------- FIN: Red Neuronal Convolucional ----------------------------------------
 

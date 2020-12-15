@@ -1,5 +1,5 @@
 """ En este fichero python se encuentra el código fuente dedicado a los testings de cada Base de Datos(ck,jaffe,fer2013)
-con cada modelo hecho a partir de dichas Bases de datos: model.h5(fer2013), modeljaffe.h5(jaffe) y modelck.h5(ck)"""
+con cada modelo hecho a partir de dichas Bases de datos: fer2013-pre(fer2013),modelkdef(kdef), modeljaffe.h5(jaffe) y modelck.h5(ck)"""
 
 import argparse
 from tensorflow.keras.models import Sequential
@@ -17,8 +17,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # -----------------------------parser de argumentos --db database --m model-----------------------------
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--db", help="ck/fer2013/jaffe/hibrido1/hibrido2/hibrido3/hibrido4")
-parser.add_argument("--m", help="ck/fer2013/jaffe/hibrido1/hibrido2/hibrido3/hibrido4")
+parser.add_argument("--db", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido3/hibrido4")
+parser.add_argument("--m", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido3/hibrido4")
 db = parser.parse_args().db
 dbmodel = parser.parse_args().m
 
@@ -40,25 +40,25 @@ else:
 dict_m = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
 
 if dbmodel == 'ck':
-    name_m = 'modelck.h5'
+    name_m = 'models/modelck.h5'
     dict_m = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5, 5: 6}
 elif dbmodel == 'jaffe':
-    name_m = 'modeljaffe.h5'
+    name_m = 'models/modeljaffe.h5'
 elif dbmodel == 'kdef':
-    name_m = 'modelkdef.h5'
+    name_m = 'models/modelkdef.h5'
 elif dbmodel == 'fer2013':
-    name_m = 'fer2013-pre.h5'
+    name_m = 'models/fer2013-pre.h5'
 elif dbmodel == 'hibrido1':
-    name_m = 'modelhibrid1.h5'
+    name_m = 'models/modelhibrid1.h5'
 elif dbmodel == 'hibrido2':
-    name_m = 'modelhibrid2.h5'
+    name_m = 'models/modelhibrid2.h5'
 elif dbmodel == 'hibrido3':
-    name_m = 'modelhibrid3.h5'
+    name_m = 'models/modelhibrid3.h5'
 elif dbmodel == 'hibrido4':
-    name_m = 'modelhibrid4.h5'
+    name_m = 'models/modelhibrid4.h5'
     # dict_m = {0: 0, 1: 1, 2: 3, 3: 4, 4: 5, 5: 6}
 elif dbmodel == 'final':
-    name_m = 'modelfinal2.h5'
+    name_m = 'models/modelfinal2.h5'
     dict_m = {0: 0, 1: 1, 2: 3, 3: 4, 4: 5, 5: 6}
 
 # -----------------------------FIN de parser de argumentos --db database --m model-----------------------------
