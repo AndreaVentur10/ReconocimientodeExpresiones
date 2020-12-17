@@ -36,7 +36,8 @@ model.load_weights('models/modelfinal2.h5')  # modelo
 cv2.ocl.setUseOpenCL(False)
 
 # diccionario de expresiones que maneja nuestro reconocedor de expresiones
-emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Happy", 3: "Neutral", 4: "Sad", 5: "Surprised"}
+# {0: "Angry", 1: "Disgusted", 2: "Happy", 3: "Neutral", 4: "Sad", 5: "Surprised"}
+emotion_dict = {0: "Enfado", 1: "Repugnancia", 2: "Felicidad", 3: "Neutralidad", 4: "Tristeza", 5: "Sorpresa"}
 # emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fear", 3:"Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
 
 # activamos la captura de fotogramas de la cámara
