@@ -17,8 +17,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # -----------------------------parser de argumentos --db database --m model-----------------------------
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--db", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido3/hibrido4")
-parser.add_argument("--m", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido3/hibrido4")
+parser.add_argument("--db", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido3/hibrido4/final")
+parser.add_argument("--m", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido3/hibrido4/final")
 db = parser.parse_args().db
 dbmodel = parser.parse_args().m
 
@@ -38,10 +38,11 @@ else:
 # guardamos el nombre del modelo y un diccionario que traduzca el índice de la expresión del modelo de la BD por el id
 # de la expresión
 dict_m = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
-
+num_emotions = 7
 if dbmodel == 'ck':
     name_m = 'models/modelck.h5'
     dict_m = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5, 5: 6}
+    num_emotions = 6
 elif dbmodel == 'jaffe':
     name_m = 'models/modeljaffe.h5'
 elif dbmodel == 'kdef':
@@ -60,6 +61,7 @@ elif dbmodel == 'hibrido4':
 elif dbmodel == 'final':
     name_m = 'models/modelfinal2.h5'
     dict_m = {0: 0, 1: 1, 2: 3, 3: 4, 4: 5, 5: 6}
+    num_emotions = 6
 
 # -----------------------------FIN de parser de argumentos --db database --m model-----------------------------
 
@@ -158,7 +160,7 @@ model.add(Dropout(0.25))
 model.add(Flatten())
 model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(7, activation='softmax')) # CAMBIAR a 6 o 7
+model.add(Dense(num_emotions, activation='softmax')) # CAMBIAR a 6 o 7
 
 # cargar el modelo
 model.load_weights(name_m)

@@ -10,9 +10,10 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # ----------------------------- INICIO: parser de argumentos --db database-----------------------------
 ap = argparse.ArgumentParser()
-ap.add_argument("--db",help="ck/fer2013/kdef/jaffe/hibrido")
+ap.add_argument("--db",help="ck/fer2013/kdef/jaffe/hibrido1/hibrido2/hibrido3/hibrido4/final")
 db = ap.parse_args().db
 
+num_emotions = 7
 if db == 'fer2013':
     train_dir = 'fer2013/train'
     val_dir = 'fer2013/test'
@@ -38,6 +39,7 @@ elif db == 'ck':
     num_val = 183
     batch_size = 64
     num_epoch = 50
+    num_emotions = 6
     name_m = 'models/modelck.h5'
 
 elif db == 'kdef':
@@ -92,6 +94,7 @@ elif db == 'final':
     num_val = 717 # 811
     batch_size = 64
     num_epoch = 50
+    num_emotions = 6
     name_m = 'models/modelfinal2.h5'
 
 """   # Fer2013 sin preprocesar
@@ -154,7 +157,7 @@ model.add(Flatten())
 model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.5))
 # salida de X categorías: CAMBIAR A 7 o 6 !!!!!! IMPORTANTE depende de las expresiones que maneje el modelo
-model.add(Dense(6, activation='softmax'))
+model.add(Dense(num_emotions, activation='softmax'))
 
 # se entrena el modelo configurado con el número total de epocas (bloques) y generador de imágenes de validacion/testing
 # que se utilizará para evaluar el modelo al acabar cada epoca
