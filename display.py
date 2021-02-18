@@ -1,4 +1,7 @@
-
+"""
+    display.py - en este fichero python se encuentra el código fuente dedicado a la
+    ejecución de la herramienta de reconocimiento de exresiones faciales.
+"""
 import os
 import cv2
 import numpy as np

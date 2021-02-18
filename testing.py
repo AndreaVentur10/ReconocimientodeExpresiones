@@ -1,7 +1,24 @@
 """
-    En este fichero python se encuentra el código fuente dedicado a los testings de cada Base
-    de Datos(ck,jaffe,fer2013) con cada modelo hecho a partir de dichas Bases de datos: fer2013-pre
-    (fer2013), modelkdef(kdef), modeljaffe.h5(jaffe) y modelck.h5(ck)
+    testing.py - en este fichero python se encuentra el código fuente dedicado a los testings de
+    cada Base de Datos(ck,jaffe,fer2013) con cada modelo hecho a partir de dichas Bases de datos:
+    fer2013-pre(fer2013), modelkdef(kdef), modeljaffe.h5(jaffe) y modelck.h5(ck)
+
+    Para hacer un test a una base de datos con un modelo pre-entrenado, se ejecuta este fichero
+    agregando  la base ded atos elegida y el modelo con el que se va a probar el acierto.
+        python  testing.py --db kdef --m fer2013
+    El comando anterior prueba el modelo de fer2013 en las imagenes de kdef y devuelve como
+    resultado el porcentaje de aciertos que ha obtenido respecto al total de imagenes de cada
+    expresión. Con el comando anterior se obtendría por consola lo siguiente:
+
+            ENFADO Id 0: 64.29 % | correct : 18  fail: 10
+            REPUGNANCIA Id 1: 0.00 % | correct : 0  fail: 28
+            MIEDO Id 2: 7.14 % | correct : 2  fail: 26
+            FELICIDAD  Id 3: 100.00 % | correct : 28  fail: 0
+            NEUTRAL Id 4: 96.43 number % | correct : 27  fail: 1
+            TRISTEZA Id 5: 7.14 % | correct : 2  fail: 26
+            SORPRESA Id 6: 10.71 % | correct : 3  fail: 25
+
+            PRECISION TOTAL DE BD: 40.82 %
 """
 
 import os
@@ -129,8 +146,8 @@ def run_recognizer():
         # print(pred in dict_m.keys())
         # print(dict_m[pred])
         # print(dict_db[testing_labels[cnt]])
-        print("%s lo predice como : %s"% (dict_orig[dict_db[testing_labels[cnt]]],
-                                          dict_orig[dict_m[pred]]))
+        #print("%s lo predice como : %s"% (dict_orig[dict_db[testing_labels[cnt]]],
+        #                                  dict_orig[dict_m[pred]]))
 
         if dict_m[pred] == dict_db[testing_labels[cnt]]:
             correct += 1
@@ -191,24 +208,11 @@ number_exp = 0
 for j in range(0, 7):
     try:
         res = (number_hits[j] * 100) / (number_hits[j] + number_fails[j])
-        #print(res)
     except ZeroDivisionError:
         res = 0
-        #print(j)
-    # print(Decimal(res))
     percentages_exp[j] = res
-#metascore = perc
 
-# print(perc)
-# print("porcentajes")
-# print(percentages_exp)
-n0 = number_hits[0] + number_fails[0]
-n1 = number_hits[1] + number_fails[1]
-n2 = number_hits[2] + number_fails[2]
-n3 = number_hits[3] + number_fails[3]
-n4 = number_hits[4] + number_fails[4]
-n5 = number_hits[5] + number_fails[5]
-n6 = number_hits[6] + number_fails[6]
+
 print("Resultados Testing modelo %s con BD %s" % (dbmodel, db))
 print("\nENFADO Id 0: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[0])),
                                                            number_hits[0], number_fails[0] ))
@@ -216,16 +220,6 @@ print("REPUGNANCIA Id 1: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(pe
                                                               number_hits[1], number_fails[1]))
 print("MIEDO Id 2: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[2])),
                                                         number_hits[2], number_fails[2]))
-"""print("\nfear 2: %.2f number :" % (Decimal(np.mean(percentages_exp[2]))))
-print("correct : %d  fail: %d" % (number_hits[2], number_fails[2]))
-print("\nhappy 3: %.2f number " % (Decimal(np.mean(percentages_exp[3]))))
-print("correct : %d  fail: %d" % (number_hits[3], number_fails[3]))
-print("\nneutral 4: %.2f number " % (Decimal(np.mean(percentages_exp[4]))))
-print("correct : %d  fail: %d" % (number_hits[4], number_fails[4]))
-print("\nsadness 5: %.2f number :" % (Decimal(np.mean(percentages_exp[5]))))
-print("correct : %d  fail: %d" % (number_hits[5], number_fails[5]))
-print("\nsurprise 6: %.2f number :" % (Decimal(np.mean(percentages_exp[6]))))
-print("correct : %d  fail: %d" % (number_hits[6], number_fails[6]))"""
 print("FELICIDAD  Id 3: %.2f %% | correct : %d  fail: %d " % (Decimal(np.mean(percentages_exp[3])),
                                                               number_hits[3], number_fails[3]))
 print("NEUTRAL Id 4: %.2f number %% | correct : %d  fail: %d" % (Decimal(np.mean(
