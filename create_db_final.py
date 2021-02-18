@@ -1,7 +1,7 @@
 """
-    create_db_final.py - en este fichero python se encuentra el código fuente dedicado a los
-    testings de cada Base de Datos(ck,jaffe,fer2013) con cada modelo hecho a partir de dichas
-    Bases de datos:model.h5(fer2013), modelkdef.h5(kdef), modeljaffe.h5(jaffe) y modelck.h5(ck)
+    create_db_final.py - en este fichero python se encuentra el código fuente dedicado a la
+    creación de la base de datos final. Toma de cada base de datos los lotes de imágenes con
+    los que se han obenido mejores clasificaciones en los testings.
 """
 import os
 import glob
