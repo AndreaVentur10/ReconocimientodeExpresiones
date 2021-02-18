@@ -1,20 +1,23 @@
-""" En este fichero python se encuentra el código fuente dedicado a los testings de cada Base de Datos(ck,jaffe,fer2013)
-con cada modelo hecho a partir de dichas Bases de datos: fer2013-pre(fer2013),modelkdef(kdef), modeljaffe.h5(jaffe) y modelck.h5(ck)"""
+"""
+    En este fichero python se encuentra el código fuente dedicado a los testings de cada Base
+    de Datos(ck,jaffe,fer2013) con cada modelo hecho a partir de dichas Bases de datos: fer2013-pre
+    (fer2013), modelkdef(kdef), modeljaffe.h5(jaffe) y modelck.h5(ck)
+"""
 
+import os
+import cv2
+import glob
 import argparse
+import numpy as np
+from decimal import Decimal
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPooling2D
-import cv2
-import glob
-import numpy as np
-import os
-from decimal import Decimal
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-# -----------------------------parser de argumentos --db database --m model-----------------------------
+# ---------------------------parser de argumentos --db database --m model---------------------------
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--db", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido3/hibrido4/final")
@@ -22,21 +25,22 @@ parser.add_argument("--m", help="ck/fer2013/jaffe/kdef/hibrido1/hibrido2/hibrido
 db = parser.parse_args().db
 dbmodel = parser.parse_args().m
 
-# dependiendo de la BD que se utilice para el testing tendremos ciertas expresiones. Usaremos una lista de las
-# expresiones que maneja la BD y un diccionario que traduzca el indice de la expresión del modelo de la BD por el id de
-# la expresión
+# dependiendo de la BD que se utilice para el testing tendremos ciertas expresiones. Usaremos una
+# lista de las expresiones que maneja la BD y un diccionario que traduzca el indice de la expresión
+# del modelo de la BD por el id de la expresión
 
 if db == 'ck':
     emotions = ["anger", "disgust", "fear", "happy", "sad", "surprise"]  # Emotion list CK DB
     dict_db = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5, 5: 6}
 else:
-    emotions = ["anger", "disgust", "fear", "happy", "neutral", "sad", "surprise"]  # GENERAL Emotion list
+    emotions = ["anger", "disgust", "fear", "happy", "neutral", "sad", "surprise"]  # GENERAL list
     dict_db = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
-    # emotions = ["anger", "disgust", "fear", "happy", "neutral", "sad", "surprise"]  # Emotion list fer2013 DB
+    # emotions = ["anger", "disgust", "fear", "happy", "neutral", "sad", "surprise"]  # Emotion list
+    # fer2013 DB
     # dict_db = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
 
-# guardamos el nombre del modelo y un diccionario que traduzca el índice de la expresión del modelo de la BD por el id
-# de la expresión
+# guardamos el nombre del modelo y un diccionario que traduzca el índice de la expresión del modelo
+# de la BD por el id de la expresión
 dict_m = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6}
 num_emotions = 7
 if dbmodel == 'ck':
@@ -63,15 +67,18 @@ elif dbmodel == 'final':
     dict_m = {0: 0, 1: 1, 2: 3, 3: 4, 4: 5, 5: 6}
     num_emotions = 6
 
-# -----------------------------FIN de parser de argumentos --db database --m model-----------------------------
+# ----------------------FIN de parser de argumentos --db database --m model-------------------------
 
-dict_orig = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
+dict_orig = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad",
+             6: "Surprised"}
 # dict_orig = {0: "Angry", 1: "Disgusted", 2: "Happy", 3: "Neutral", 4: "Sad", 5: "Surprised"}
 
-""" Función auxiliar make_sets() para crear 2 listas:
--testing_data: lista de todas las imágenes de todas las expresiones a testear
--testing_labels: lista de las etiquetas de estas imágenes guardadas en el mismo orden, la etiqueta será el id 
-identificativo de cada expresion en el modelo"""
+"""
+     Función auxiliar make_sets() para crear 2 listas:
+     -testing_data: lista de todas las imágenes de todas las expresiones a testear
+     -testing_labels: lista de las etiquetas de estas imágenes guardadas en el mismo orden, la
+     etiqueta será el id identificativo de cada expresion en el modelo
+"""
 
 def make_sets():
     testing_data = []
@@ -89,9 +96,11 @@ def make_sets():
 
     return testing_data, testing_labels
 
-""" Función auxiliar run_recognizer() para crear 2 listas y un porcentaje de aciertos general:
--hit: aciertos de cada expresión
--fail: fallos de cada expresión"""
+"""
+    Función auxiliar run_recognizer() para crear 2 listas y un porcentaje de aciertos general:
+    -hit: aciertos de cada expresión
+    -fail: fallos de cada expresión
+"""
 
 def run_recognizer():
     #lista de imagenes testing y sus etiquetas
@@ -110,16 +119,18 @@ def run_recognizer():
         im_array = np.expand_dims(np.expand_dims(im, -1), 0)
         # vector de estimación
         prediction = model.predict(im_array)
-        # nos quedamos con el dato más alto cuyo indice de posición corresponde al íd identificativo de la expresión
+        # nos quedamos con el dato más alto cuyo indice de posición corresponde al íd identificativo
+        # de la expresión
         pred = int(np.argmax(prediction))
 
-        # si el id de la expresión es el mismo que el id de la expresión predecida se guarda el acierto sino se guarda
-        # el fallo
+        # si el id de la expresión es el mismo que el id de la expresión predecida se guarda el
+        # acierto sino se guarda el fallo
         # print(pred)
         # print(pred in dict_m.keys())
         # print(dict_m[pred])
         # print(dict_db[testing_labels[cnt]])
-        print("%s lo predice como : %s"% (dict_orig[dict_db[testing_labels[cnt]]],dict_orig[dict_m[pred]]))
+        print("%s lo predice como : %s"% (dict_orig[dict_db[testing_labels[cnt]]],
+                                          dict_orig[dict_m[pred]]))
 
         if dict_m[pred] == dict_db[testing_labels[cnt]]:
             correct += 1
@@ -132,7 +143,8 @@ def run_recognizer():
 
     return ((100 * correct) / (correct + incorrect)), hit, fail
 
-# --------------------------------- INICIO: Cargar modelo de Red Neuronal Convolucional --------------------------------
+
+# --------------------- INICIO: Cargar modelo de Red Neuronal Convolucional ------------------------
 model = Sequential()
 """
 # capa 1 convolucional 32 filtros
@@ -164,7 +176,7 @@ model.add(Dense(num_emotions, activation='softmax')) # CAMBIAR a 6 o 7
 
 # cargar el modelo
 model.load_weights(name_m)
-# ----------------------------------- FIN: Cargar modelo de Red Neuronal Convolucional ---------------------------------
+# --------------------- FIN: Cargar modelo de Red Neuronal Convolucional ---------------------------
 
 #metascore = 0
 percentages_exp = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
@@ -198,9 +210,12 @@ n4 = number_hits[4] + number_fails[4]
 n5 = number_hits[5] + number_fails[5]
 n6 = number_hits[6] + number_fails[6]
 print("Resultados Testing modelo %s con BD %s" % (dbmodel, db))
-print("\nENFADO Id 0: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[0])),number_hits[0], number_fails[0] ))
-print("REPUGNANCIA Id 1: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[1])), number_hits[1], number_fails[1]))
-print("MIEDO Id 2: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[2])), number_hits[2], number_fails[2]))
+print("\nENFADO Id 0: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[0])),
+                                                           number_hits[0], number_fails[0] ))
+print("REPUGNANCIA Id 1: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[1])),
+                                                              number_hits[1], number_fails[1]))
+print("MIEDO Id 2: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[2])),
+                                                        number_hits[2], number_fails[2]))
 """print("\nfear 2: %.2f number :" % (Decimal(np.mean(percentages_exp[2]))))
 print("correct : %d  fail: %d" % (number_hits[2], number_fails[2]))
 print("\nhappy 3: %.2f number " % (Decimal(np.mean(percentages_exp[3]))))
@@ -211,10 +226,12 @@ print("\nsadness 5: %.2f number :" % (Decimal(np.mean(percentages_exp[5]))))
 print("correct : %d  fail: %d" % (number_hits[5], number_fails[5]))
 print("\nsurprise 6: %.2f number :" % (Decimal(np.mean(percentages_exp[6]))))
 print("correct : %d  fail: %d" % (number_hits[6], number_fails[6]))"""
-print("FELICIDAD  Id 3: %.2f %% | correct : %d  fail: %d " % (Decimal(np.mean(percentages_exp[3])), number_hits[3], number_fails[3]))
-print("NEUTRAL Id 4: %.2f number %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[4])), number_hits[4], number_fails[4]))
-print("TRISTEZA Id 5: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[5])), number_hits[5], number_fails[5]))
-print("SORPRESA Id 6: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[6])), number_hits[6], number_fails[6]))
+print("FELICIDAD  Id 3: %.2f %% | correct : %d  fail: %d " % (Decimal(np.mean(percentages_exp[3])),
+                                                              number_hits[3], number_fails[3]))
+print("NEUTRAL Id 4: %.2f number %% | correct : %d  fail: %d" % (Decimal(np.mean(
+    percentages_exp[4])), number_hits[4], number_fails[4]))
+print("TRISTEZA Id 5: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[5])),
+                                                           number_hits[5], number_fails[5]))
+print("SORPRESA Id 6: %.2f %% | correct : %d  fail: %d" % (Decimal(np.mean(percentages_exp[6])),
+                                                           number_hits[6], number_fails[6]))
 print("\nPRECISION TOTAL DE BD: %.2f %%" % perc)
-
-

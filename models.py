@@ -1,3 +1,14 @@
+"""
+    models.py - fichero dedicado a la creación de todos los modelos con los que trabajaremos. 4
+    modelos pertenecen a cada una de las bases de datos (ck/fer2013/kdef/jaffe), otros 3 son
+    hibridos hechos juntando de dos en dos las bases de datos ck, fer2013 y kdef (hibrido1/hibrido2/
+    hibrido3), otro hibrido corresponde a la union de las tres bases de datos ck, fer2013 y kdef
+    (hibrido4) y por último el modelo final (final).
+
+    Para crear un modelo sólo basta con elegirlo al ejecutar este fichero, de la siguiente manera:
+        python models.py --db final
+"""
+import os
 import argparse
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
@@ -5,10 +16,10 @@ from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import os
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-# ----------------------------- INICIO: parser de argumentos --db database-----------------------------
+# ---------------------------- INICIO: parser de argumentos --db database---------------------------
 ap = argparse.ArgumentParser()
 ap.add_argument("--db",help="ck/fer2013/kdef/jaffe/hibrido1/hibrido2/hibrido3/hibrido4/final")
 db = ap.parse_args().db
@@ -107,14 +118,15 @@ elif db == 'final':
         num_epoch = 50
         name_m = 'models/fer2013.h5'
 """
-# ----------------------------- FIN: de parser de argumentos --db database-----------------------------
+# ------------------------- FIN: de parser de argumentos --db database---------------------------
 
-# generadores de imagenes de entrenamiento y validación, se reescala el valor de los pixeles de [0,255] a [0,1]
+# generadores de imagenes de entrenamiento y validación, se reescala el valor de los pixeles de
+# [0,255] a [0,1]
 train_datagen = ImageDataGenerator(rescale=1./255)
 val_datagen = ImageDataGenerator(rescale=1./255)
 
-# agregamos el path del directorio donde se encuentran las imágenes de training. Las dividimos en bloques de 64 para
-# procesar más fácilmente la cantidad de imágenes
+# agregamos el path del directorio donde se encuentran las imágenes de training. Las dividimos
+# en bloques de 64 para procesar más fácilmente la cantidad de imágenes
 train_generator = train_datagen.flow_from_directory(
         train_dir,
         target_size=(48,48),
@@ -129,7 +141,7 @@ validation_generator = val_datagen.flow_from_directory(
         color_mode="grayscale",
         class_mode='categorical')
 
-# ----------------------------------- INICIO: Creación de Red Neuronal Convolucional -----------------------------------
+# ------------------------ INICIO: Creación de Red Neuronal Convolucional --------------------------
 
 model = Sequential()
 
@@ -156,12 +168,14 @@ model.add(Flatten())
 # red neuronal con 1024 neuronas
 model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.5))
-# salida de X categorías: CAMBIAR A 7 o 6 !!!!!! IMPORTANTE depende de las expresiones que maneje el modelo
+# salida de X categorías: CAMBIAR A 7 o 6 !!!!!! IMPORTANTE depende de las expresiones que
+# maneje el modelo
 model.add(Dense(num_emotions, activation='softmax'))
 
-# se entrena el modelo configurado con el número total de epocas (bloques) y generador de imágenes de validacion/testing
-# que se utilizará para evaluar el modelo al acabar cada epoca
-model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),metrics=['accuracy'])
+# se entrena el modelo configurado con el número total de epocas (bloques) y generador de
+# imágenes de validacion/testing que se utilizará para evaluar el modelo al acabar cada epoca
+model.compile(loss='categorical_crossentropy',optimizer=Adam(lr=0.0001, decay=1e-6),
+              metrics=['accuracy'])
 model_info = model.fit_generator(
         train_generator,
         steps_per_epoch=num_train // batch_size,
@@ -171,4 +185,3 @@ model_info = model.fit_generator(
 
 # guardamos el modelo entrenado
 model.save_weights(name_m)
-

@@ -1,14 +1,15 @@
-import numpy as np
+
+import os
 import cv2
+import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPooling2D
-import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-# ---------------------------------------- INICIO: Red Neuronal Convolucional ----------------------------------------
+# ------------------------------- INICIO: Red Neuronal Convolucional -------------------------------
 model = Sequential()
 
 model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(48, 48, 1)))
@@ -30,15 +31,17 @@ model.add(Dense(6, activation='softmax'))
 # Cargamos el modelo final
 model.load_weights('models/modelfinal2.h5')  # modelo
 
-# ---------------------------------------- FIN: Red Neuronal Convolucional ----------------------------------------
+# ------------------------------- FIN: Red Neuronal Convolucional ----------------------------------
 
 # deshabilita el uso de OpenCL
 cv2.ocl.setUseOpenCL(False)
 
 # diccionario de expresiones que maneja nuestro reconocedor de expresiones
 # {0: "Angry", 1: "Disgusted", 2: "Happy", 3: "Neutral", 4: "Sad", 5: "Surprised"}
-emotion_dict = {0: "Enfado", 1: "Repugnancia", 2: "Felicidad", 3: "Neutralidad", 4: "Tristeza", 5: "Sorpresa"}
-# emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fear", 3:"Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
+emotion_dict = {0: "Enfado", 1: "Repugnancia", 2: "Felicidad", 3: "Neutralidad", 4: "Tristeza",
+                5: "Sorpresa"}
+# emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fear", 3:"Happy", 4: "Neutral", 5: "Sad",
+# 6: "Surprised"}
 
 # activamos la captura de fotogramas de la cámara
 cap = cv2.VideoCapture(0)
@@ -64,11 +67,12 @@ while True:
         prediction = model.predict(cropped_img)
         #print("prediccion:\n")
         #print(prediction)
-        # nos quedamos con la probabilidad más alta del vector de 6 expresiones que devuelve la predicción
+        # nos quedamos con la probabilidad más alta del vector de 6 expresiones que devuelve
+        # la predicción
         maxindex = int(np.argmax(prediction))
         # escribimos el resultado en texto
-        cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2,
-                    cv2.LINE_AA)
+        cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX,
+                    1, (255, 255, 255), 2, cv2.LINE_AA)
     # devolvemos la imágen capturada con la predicción
     cv2.imshow('Video', cv2.resize(frame, (1600, 960), interpolation=cv2.INTER_CUBIC))
     # se cierra la ventana de retransmisión si pulsamos la tecla "q"
