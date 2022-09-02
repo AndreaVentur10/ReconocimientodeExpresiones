@@ -1,6 +1,12 @@
 # ReconocimientodeExpresiones
 TFG UPM - Reconocimiento de expresiones faciales
 
+
+
+
+https://user-images.githubusercontent.com/55163240/188217006-4eaac234-871b-4acc-8243-1408c864091a.mp4
+
+
 ## Files:
 
 ck.py - contains code for pre-processing the Cohn Kanade (CK) database
